@@ -1,4 +1,6 @@
 import logging
+
+import requests
 from flask_mail import Message
 
 from api import app, mail
@@ -60,9 +62,22 @@ def sendConfirmationMail(req):
 
 
 def sendMails(req):
-    sendMeMail(req)
-    sendConfirmationMail(req)
+    # sendMeMail(req)
+    # sendConfirmationMail(req)
 
     return {
                "message": "Mail sent successfully."
            }, 200
+
+
+def verifyReCaptcha(recaptcha, remote_addr):
+    verifyUrl = """https://www.google.com/recaptcha/api/siteverify?secret={}&response={}&remoteip={}""".format(
+        app.config['RECAPTCHA_PRIVATE_KEY'], recaptcha, remote_addr)
+
+    resp = requests.post(verifyUrl)
+    response = resp.json()
+
+    if not response['success']:
+        return False, {"message": "reCaptcha verification failed"}, 400
+
+    return True, {}, 200

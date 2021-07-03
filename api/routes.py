@@ -3,7 +3,7 @@ import logging
 from flask import request
 
 from api import app
-from api.services import sendMails
+from api.services import sendMails, verifyReCaptcha
 from api.validators import validateMessage
 
 
@@ -21,6 +21,12 @@ def send_mail():
         condition, msg, status = validateMessage(req)
 
         # Validation check
+        if not condition:
+            return msg, status
+
+        # reCaptcha Verification
+        condition, msg, status = verifyReCaptcha(req['recaptcha'], request.remote_addr)
+
         if not condition:
             return msg, status
 

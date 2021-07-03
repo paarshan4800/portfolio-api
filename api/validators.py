@@ -11,6 +11,11 @@ def validateEmail(email):
 
 
 def validateMessage(req):
+    condition, msg, status = validateRecaptcha(req)
+
+    if not condition:
+        return condition, msg, status
+
     # Check for keys
     if "email" not in req:
         return False, {"message": "Email is required"}, 400
@@ -34,5 +39,12 @@ def validateMessage(req):
 
     if len(message) == 0:
         return False, {"message": "Invalid Message"}, 400
+
+    return True, {}, 200
+
+
+def validateRecaptcha(req):
+    if "recaptcha" not in req or req["recaptcha"] == '' or req["recaptcha"] is None:
+        return False, {"message": "reCaptcha verification failed"}, 400
 
     return True, {}, 200

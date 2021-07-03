@@ -1,9 +1,13 @@
-env
-env/
-
-.idea
-.idea/
-
 .env
+
+env/
+env
+
+__pycache__/
+__pycache__
+
+.idea/
+.idea
+
 
 mailer.log
