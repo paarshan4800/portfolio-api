@@ -62,8 +62,8 @@ def sendConfirmationMail(req):
 
 
 def sendMails(req):
-    # sendMeMail(req)
-    # sendConfirmationMail(req)
+    sendMeMail(req)
+    sendConfirmationMail(req)
 
     return {
                "message": "Mail sent successfully."

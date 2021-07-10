@@ -12,11 +12,6 @@ def home():
     return {"message": "Hello from API"}, 200
 
 
-@app.route("/get-ip", methods=["GET"])
-def get_ip():
-    return {"message": "Your IP addr is {}".format(request.remote_addr)}, 200
-
-
 @app.route("/wake-up", methods=["GET"])
 def wake_up():
     return {"message": "Thanks for waking me up!"}, 200
